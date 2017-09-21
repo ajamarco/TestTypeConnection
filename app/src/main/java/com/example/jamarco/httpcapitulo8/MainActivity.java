@@ -7,6 +7,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -49,5 +57,37 @@ public class MainActivity extends AppCompatActivity {
         else{
             return false;
         }
+    }
+
+    //establishing a connection
+    private List<String> downloadString(String webAddress){
+        final int SECONDS = 1000;
+        try{
+            URL url = new URL(webAddress);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(10 * SECONDS);
+            connection.setConnectTimeout(15 * SECONDS);
+            connection.setRequestMethod("GET");
+            connection.setDoInput(true);
+            connection.setDoOutput(false);
+            connection.connect();
+
+            int answer = connection.getResponseCode();
+            if (answer == HttpURLConnection.HTTP_OK){
+                InputStream is = connection.getInputStream();
+
+                List<String> strings = new ArrayList<>();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                String s = null;
+                while ((s = reader.readLine()) != null){
+                    strings.add(s);
+                }
+
+                return  strings;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
