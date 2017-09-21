@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             connection.setDoOutput(false);
             connection.connect();
 
+            //create a var that holds the Response code
+            //if this code is 200, the connection is OK
             int answer = connection.getResponseCode();
             if (answer == HttpURLConnection.HTTP_OK){
                 InputStream is = connection.getInputStream();
