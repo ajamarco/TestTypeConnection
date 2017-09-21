@@ -31,4 +31,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    
+        //check if there is some connection regardless if it's wifi, mobile, etc
+    public boolean hasConnection(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        if (activeNetwork != null && activeNetwork.isConnected()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
