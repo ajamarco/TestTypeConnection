@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 while ((s = reader.readLine()) != null){
                     strings.add(s);
                 }
-
+//aa
                 return  strings;
             }
         } catch (Exception e){
